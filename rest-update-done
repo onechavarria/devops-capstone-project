@@ -1,0 +1,15 @@
+curl -i -X PUT http://127.0.0.1:5000/accounts/65 \
+-H "Content-Type: application/json" \
+-d '{"name":"Cliente IBM Actualizado","email":"cliente@example.com","address":"Santiago, Chile","phone_number":"123456789","date_joined":"2026-11-20"}'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   301  100   155  100   146  10871  10239 --:--:-- --:--:-- --:--:-- 23153
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Sat, 21 Nov 2026 02:52:07 GMT
+Connection: close
+Content-Type: application/json
+Content-Length: 155
+
+{"address":"Santiago, Chile","date_joined":"2026-11-20","email":"cliente@example.com","id":65,"name":"Cliente IBM Actualizado","phone_number":"123456789"}

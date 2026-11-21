@@ -1,0 +1,12 @@
+curl -i -X GET http://127.0.0.1:5000/accounts/65
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   143  100   143    0     0  21929      0 --:--:-- --:--:-- --:--:-- 23833
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Sat, 21 Nov 2026 02:52:07 GMT
+Connection: close
+Content-Type: application/json
+Content-Length: 143
+
+{"address":"Santiago, Chile","date_joined":"2026-11-20","email":"cliente@example.com","id":65,"name":"Cliente IBM","phone_number":"123456789"}

@@ -1,0 +1,10 @@
+curl -i -X DELETE http://127.0.0.1:5000/accounts/65
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 204 NO CONTENT
+Server: gunicorn
+Date: Sat, 21 Nov 2026 02:52:07 GMT
+Connection: close
+Content-Type: text/html; charset=utf-8
+

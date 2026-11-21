@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: nose-tests
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: test
+      image: python:3.9-slim
+      workingDir: $(workspaces.source.path)
+      env:
+        - name: DATABASE_HOST
+          value: postgresql
+        - name: DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: database-name
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: database-user
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql
+              key: database-password
+      script: |
+        #!/bin/sh
+        set -eu
+
+        python -m pip install --no-cache-dir -r requirements.txt
+
+        export DATABASE_URI="$(python -c 'import os; from urllib.parse import quote; u=quote(os.environ["DATABASE_USER"],safe=""); p=quote(os.environ["DATABASE_PASSWORD"],safe=""); print("postgresql://{}:{}@{}:5432/{}".format(u,p,os.environ["DATABASE_HOST"],os.environ["DATABASE_NAME"]))')"
+
+        nosetests --with-spec --spec-color

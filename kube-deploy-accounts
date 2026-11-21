@@ -1,0 +1,16 @@
+===== DEPLOYMENT ACCOUNTS =====
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                                                                                                                   SELECTOR
+accounts   1/1     1            1           12m   accounts     image-registry.openshift-image-registry.svc:5000/sn-labs-alcindochava/accounts@sha256:8ddd1a1ec99224a3f6ea05099e61a5e984d847a22744e0dcce3468c81dc0ebcc   deployment=accounts
+===== PODS =====
+NAME                       READY   STATUS    RESTARTS   AGE   IP              NODE          NOMINATED NODE   READINESS GATES
+accounts-56b6bc977-j6mvw   1/1     Running   0          12m   172.17.54.165   10.241.0.53   <none>           <none>
+===== REPLICA SETS =====
+NAME                               DESIRED   CURRENT   READY   AGE
+accounts-56b6bc977                 1         1         1       12m
+accounts-78cb8fc574                0         0         0       12m
+openshift-web-console-7f655df44d   2         2         2       4h2m
+===== SERVICIOS =====
+NAME       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE   SELECTOR
+accounts   ClusterIP   172.21.77.18   <none>        8080/TCP   12m   deployment=accounts
+===== ESTADO DEL DESPLIEGUE =====
+deployment "accounts" successfully rolled out
