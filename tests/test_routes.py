@@ -158,3 +158,58 @@ class TestAccountService(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.get_json(), [])
+
+    def test_update_account(self):
+        """It should Update an existing Account"""
+        account = self._create_accounts(1)[0]
+        updated_data = account.serialize()
+        updated_data["name"] = "Updated Customer"
+
+        response = self.client.put(
+            f"{BASE_URL}/{account.id}",
+            json=updated_data,
+            content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.get_json()["name"],
+            "Updated Customer"
+        )
+
+    def test_update_account_not_found(self):
+        """It should return 404 when updating an unknown Account"""
+        account = AccountFactory()
+        response = self.client.put(
+            f"{BASE_URL}/999999",
+            json=account.serialize()
+        )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_404_NOT_FOUND
+        )
+
+    def test_delete_account(self):
+        """It should Delete an existing Account"""
+        account = self._create_accounts(1)[0]
+
+        response = self.client.delete(f"{BASE_URL}/{account.id}")
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_204_NO_CONTENT
+        )
+
+        response = self.client.get(f"{BASE_URL}/{account.id}")
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_404_NOT_FOUND
+        )
+
+    def test_delete_account_not_found(self):
+        """It should return 204 when deleting an unknown Account"""
+        response = self.client.delete(f"{BASE_URL}/999999")
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_204_NO_CONTENT
+        )
