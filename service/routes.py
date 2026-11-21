@@ -51,8 +51,7 @@ def create_accounts():
     account.create()
     message = account.serialize()
     # Uncomment once get_accounts has been implemented
-    # location_url = url_for("get_accounts", account_id=account.id, _external=True)
-    location_url = "/"  # Remove once get_accounts has been implemented
+    location_url = url_for("get_accounts", account_id=account.id, _external=True)
     return make_response(
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
@@ -61,14 +60,42 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+
+@app.route("/accounts", methods=["GET"])
+def list_accounts():
+    """Returns all Accounts"""
+    app.logger.info("Request to list Accounts")
+
+    name = request.args.get("name")
+
+    if name:
+        accounts = Account.find_by_name(name)
+    else:
+        accounts = Account.all()
+
+    results = [account.serialize() for account in accounts]
+
+    return jsonify(results), status.HTTP_200_OK
+
 
 
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
-# ... place you code here to READ an account ...
+
+@app.route("/accounts/<int:account_id>", methods=["GET"])
+def get_accounts(account_id):
+    """Returns an Account by ID"""
+    app.logger.info("Request to read Account %s", account_id)
+
+    account = Account.find(account_id)
+
+    if not account:
+        abort(status.HTTP_404_NOT_FOUND)
+
+    return jsonify(account.serialize()), status.HTTP_200_OK
+
 
 
 ######################################################################
