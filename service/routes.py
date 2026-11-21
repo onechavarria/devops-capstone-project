@@ -78,7 +78,6 @@ def list_accounts():
     return jsonify(results), status.HTTP_200_OK
 
 
-
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
@@ -95,7 +94,6 @@ def get_accounts(account_id):
         abort(status.HTTP_404_NOT_FOUND)
 
     return jsonify(account.serialize()), status.HTTP_200_OK
-
 
 
 ######################################################################
@@ -121,7 +119,6 @@ def update_accounts(account_id):
     return jsonify(account.serialize()), status.HTTP_200_OK
 
 
-
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
@@ -138,7 +135,6 @@ def delete_accounts(account_id):
         account.delete()
 
     return "", status.HTTP_204_NO_CONTENT
-
 
 
 ######################################################################
