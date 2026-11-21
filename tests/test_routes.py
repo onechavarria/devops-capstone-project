@@ -213,3 +213,34 @@ class TestAccountService(TestCase):
             response.status_code,
             status.HTTP_204_NO_CONTENT
         )
+
+    def test_security_headers(self):
+        """It should return security headers"""
+        response = self.client.get("/health")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers.get("X-Content-Type-Options"),
+            "nosniff"
+        )
+        self.assertEqual(
+            response.headers.get("X-Frame-Options"),
+            "DENY"
+        )
+        self.assertIn(
+            "default-src",
+            response.headers.get("Content-Security-Policy", "")
+        )
+
+    def test_cors_headers(self):
+        """It should allow the configured frontend origin"""
+        response = self.client.get(
+            "/accounts",
+            headers={"Origin": "http://localhost:3000"}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers.get("Access-Control-Allow-Origin"),
+            "http://localhost:3000"
+        )
